@@ -1,0 +1,494 @@
+#:kivy 2.0.0
+#:import get_color_from_hex kivy.utils.get_color_from_hex
+TelaGerenciadora: 
+    Tela1:
+    Tela2:
+    Tela3:
+
+<Tela1>:
+    name: 'tela1'
+    Screen: 
+    BoxLayout:
+        orientation: 'vertical'
+        MDToolbar:
+            title: 'ABR - Analise de barragens Recife'
+            md_bg_color: get_color_from_hex("#87CEFA")
+            specific_text_color: get_color_from_hex("#4a4939")
+            left_action_items: [["menu", lambda x: x]]
+            right_action_items: [["dots-vertical", lambda x: x]]
+        TelaLogin:
+
+<Tela2>:
+    name: 'tela2'
+    MDNavigationLayout:
+
+        ScreenManager:
+
+            MDScreen:
+
+                MDToolbar:
+                    title: "ABR - analise de barragem Recife"
+                    elevation: 10
+                    pos_hint: {"top": 1}
+                    md_bg_color: get_color_from_hex("#87CEFA")
+                    specific_text_color: get_color_from_hex("#4a4939")
+                    left_action_items:
+                        [['menu', lambda x: nav_drawer.set_state("open")]]
+
+                BoxLayout:
+                    orientation: 'vertical'
+
+                    MDFloatLayout:
+                        spacing: '50dp'
+
+                        MDLabel:
+                            id: barragens
+                            text: '(SELECIONAR BARRAGEM)'   #posso selecionar a barragem atraves de ids.barragens.text
+                            halign: "center"
+                            height: '300dp'
+                            pos_hint: {'center_x': 0.5, 'center_y': 0.7}
+
+                        MDLabel:
+                            id: indicador
+                            text: 'Rachaduras'  #Posso mudar ao pressionar os botões de seta
+                            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                            halign: "center"
+
+                        MDRoundFlatIconButton:
+                            id: bt_con
+                            text: 'Avaliar'
+                            icon: 'star'
+                            pos_hint: {'center_x': 0.5, 'center_y': 0.17}
+                            #on_release: root.saveInfo(barragens.text, indicador.text, contador.text)
+                            #on_release: root.selectDB()
+
+                        MDIconButton:
+                            id: btn_voltar
+                            pos_hint: {'center_x': 0.1, 'center_y': 0.5}
+                            icon: 'arrow-left-drop-circle-outline'
+                            #on_release: root.Voltar()
+
+                        MDIconButton:
+                            id: btn_proximo
+                            pos_hint: {'center_x': 0.9, 'center_y': 0.5}
+                            icon: 'arrow-right-drop-circle-outline'
+                            #on_release: root.Proximo()
+                            
+                        MDIconButton:
+                            id: acre
+                            pos_hint: {'center_x': 0.6, 'center_y': 0.3}
+                            icon: 'plus'
+                            #on_release: root.Incrementador()                 
+
+                        MDIconButton:
+                            id: decre
+                            pos_hint: {'center_x': 0.4, 'center_y': 0.3}
+                            icon: 'minus'
+                            #on_release: root.Decrementador() 
+
+                        MDLabel:
+                            id: contador
+                            text:'0'
+                            halign: "center"
+                            pos_hint: {'center_x': 0.5, 'center_y': 0.3}
+
+        MDNavigationDrawer:
+            id: nav_drawer
+            md_bg_color: get_color_from_hex("#ADD8E6")
+            anchor: 'left'
+
+            ContentNavigationDrawer:
+
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    MDFloatLayout:
+                        MDNavigationDrawerHeader:
+                            title: "Telas"
+                            text: "Consulta e informações"
+                            spacing: "4dp"
+                            padding: "12dp", 0, 0, "56dp"
+                            pos_hint: {'center_x': .5, 'center_y': .9}
+
+                        MDNavigationDrawerLabel:
+                            text: "Banco:"
+                            pos_hint: {'center_x': .5, 'center_y': .8}
+
+                        MDRoundFlatIconButton: 
+                            icon: 'home'
+                            text: 'Tela de avaliação'
+                            pos_hint: {'center_x': .5, 'center_y': .7}
+                            size_hint_x: 1
+                            text_color: 'black'
+                            line_color: 'black'
+                            theme_icon_color: "Custom"
+                            icon_color: 'black'
+                            on_release: 
+                                app.root.current = 'tela2'  
+
+                        MDRoundFlatIconButton: 
+                            icon: 'monitor-screenshot'
+                            text: 'Tela 2'
+                            pos_hint: {'center_x': .5, 'center_y': .6}
+                            size_hint_x: 1
+                            text_color: 'black'
+                            line_color: 'black'
+                            theme_icon_color: "Custom"
+                            icon_color: 'black'
+                            on_release: 
+                                app.root.current = 'tela3'
+
+                        MDRoundFlatIconButton: 
+                            icon: 'alien'
+                            text: 'inserir...'
+                            pos_hint: {'center_x': .5, 'center_y': .5}
+                            size_hint_x: 1
+                            text_color: 'black'
+                            line_color: 'black'
+                            theme_icon_color: "Custom"
+                            icon_color: 'black'
+
+                        MDRoundFlatIconButton: 
+                            icon: 'alien'
+                            text: 'inserir...'
+                            pos_hint: {'center_x': .5, 'center_y': .4}
+                            size_hint_x: 1
+                            text_color: 'black'
+                            line_color: 'black'
+                            theme_icon_color: "Custom"
+                            icon_color: 'black'
+
+
+<Tela3>:
+    name: 'tela3'
+
+
+    MDNavigationLayout:
+
+        ScreenManager:
+
+            MDScreen:
+
+                MDToolbar:
+                    title: "ABR - analise de barragem Recife"
+                    elevation: 10
+                    pos_hint: {"top": 1}
+                    md_bg_color: get_color_from_hex("#87CEFA")
+                    specific_text_color: get_color_from_hex("#4a4939")
+                    left_action_items:
+                        [['menu', lambda x: nav_drawer.set_state("open")]]
+
+                BoxLayout:
+                    orientation: 'vertical'
+
+                    FloatLayout:
+                        MDLabel: 
+                            id: nome
+                            text: 'Nome: '
+                            pos_hint: { 'center_y': 0.6}
+                            halign: 'center'
+
+                        MDLabel:
+                            id: idade
+                            text: 'Coor: '
+                            pos_hint: { 'center_y': 0.5}
+                            halign: 'center'
+                        
+                        MDLabel:
+                            id: email
+                            text: 'Tipo: '
+                            pos_hint: { 'center_y': 0.4}
+                            halign: 'center'
+
+                        MDRaisedButton: 
+                            text: 'Select DB'
+                            on_release: root.selectDB()
+                            pos_hint: {'center_x': .5,'center_y': 0.3}
+                            size_hint_x: .5
+
+                        MDRaisedButton: 
+                            text: 'fechar banco'
+                            on_release: root.fecharDB()
+                            pos_hint: {'center_x': .1,'center_y': 0.1}
+                        MDLabel: 
+                            id: lbl_db_stats
+                            text: ''
+                            pos_hint: {'center_y': .2}
+
+
+        MDNavigationDrawer:
+            id: nav_drawer
+            md_bg_color: get_color_from_hex("#ADD8E6")
+            anchor: 'left'
+
+            ContentNavigationDrawer:
+
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    MDFloatLayout:
+                        MDNavigationDrawerHeader:
+                            title: "Telas"
+                            text: "Consulta e informações"
+                            spacing: "4dp"
+                            padding: "12dp", 0, 0, "56dp"
+                            pos_hint: {'center_x': .5, 'center_y': .9}
+
+                        MDNavigationDrawerLabel:
+                            text: "Banco:"
+                            pos_hint: {'center_x': .5, 'center_y': .8}
+
+                        MDRoundFlatIconButton: 
+                            icon: 'home'
+                            text: 'Tela de avaliação'
+                            pos_hint: {'center_x': .5, 'center_y': .7}
+                            size_hint_x: 1
+                            text_color: 'black'
+                            line_color: 'black'
+                            theme_icon_color: "Custom"
+                            icon_color: 'black'
+                            on_release: 
+                                app.root.current = 'tela2'  
+
+                        MDRoundFlatIconButton: 
+                            icon: 'monitor-screenshot'
+                            text: 'Tela 2'
+                            pos_hint: {'center_x': .5, 'center_y': .6}
+                            size_hint_x: 1
+                            text_color: 'black'
+                            line_color: 'black'
+                            theme_icon_color: "Custom"
+                            icon_color: 'black'
+                            on_release: 
+                                app.root.current = 'tela3'
+
+                        MDRoundFlatIconButton: 
+                            icon: 'alien'
+                            text: 'inserir...'
+                            pos_hint: {'center_x': .5, 'center_y': .5}
+                            size_hint_x: 1
+                            text_color: 'black'
+                            line_color: 'black'
+                            theme_icon_color: "Custom"
+                            icon_color: 'black'
+
+                        MDRoundFlatIconButton: 
+                            icon: 'alien'
+                            text: 'inserir...'
+                            pos_hint: {'center_x': .5, 'center_y': .4}
+                            size_hint_x: 1
+                            text_color: 'black'
+                            line_color: 'black'
+                            theme_icon_color: "Custom"
+                            icon_color: 'black'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<LoginCard>:
+    pos_hint: {'center_x': .5, 'center_y': .5}
+    orientation: 'vertical'
+    size_hint: .5, .5
+
+    MDBoxLayout: 
+        size_hint_y: .2
+        padding: [25, 0, 25, 0]
+        md_bg_color: app.theme_cls.primary_color
+        size_hint_y: .1
+
+        MDLabel:
+            text: 'Bem-vindo'
+            theme_text_color: 'Custom'
+            text_color: 1,1,1,1 
+
+        MDIconButton:
+            icon: "check"
+            theme_text_color: 'Custom'
+            text_color: 1,1,1,1 
+
+    MDFloatLayout: 
+
+        MDRaisedButton: 
+            pos_hint: {'center_x': .5, 'center_y': .2}
+            size_hint_x: .9
+            text: 'Próximo'
+            on_release: 
+                app.root.current = 'tela2'
+
+<SenhaCard>:
+    pos_hint: {'center_x': .5, 'center_y': .5}
+    orientation: 'vertical'
+    size_hint: .9, 1
+    
+    MDBoxLayout: 
+        size_hint_y: .2
+        padding: [25, 0, 25, 0]
+        md_bg_color: app.theme_cls.primary_color
+        size_hint_y: .1
+
+
+        MDLabel:
+            text: 'Mudar senha'
+            theme_text_color: 'Custom'
+            text_color: 1,1,1,1 
+        MDIconButton:
+            icon: "close"
+            theme_text_color: 'Custom'
+            text_color: 1,1,1,1 
+            on_release: root.fechar()
+            
+
+    MDFloatLayout: 
+
+        MDLabel:
+            id: result_novaSenha
+            text: ''
+            pos_hint: {'center_y': .65}
+            halign: 'right'
+
+        MDTextField:
+            id: enviar_cod
+            pos_hint: {'center_x': .5, 'center_y': .9}
+            size_hint_x: .9
+            hint_text: 'Email'
+            mode: 'rectangle'     
+        MDRaisedButton:
+            text:'Enviar código' 
+            pos_hint: {'center_x': .8, 'center_y': .75}
+            on_release: root.enviar_cod()
+
+        MDRaisedButton:
+            text:'Confirmar código' 
+            pos_hint: {'center_x': .2, 'center_y': .6}
+            on_release: root.confimar_cod()
+
+        MDTextField:
+            id: codigo
+            pos_hint: {'center_x': .2, 'center_y': .75}
+            size_hint_x: .3
+            hint_text: 'Código'
+            mode: 'rectangle'
+
+        MDTextField:
+            pos_hint: {'center_x': .5, 'center_y': .4}
+            size_hint_x: .9
+            hint_text: 'Nova senha:'
+            mode: 'rectangle'
+        MDTextField:
+            pos_hint: {'center_x': .5, 'center_y': .25}
+            size_hint_x: .9
+            hint_text: 'Confirmar nova senha:'
+            mode: 'rectangle'
+        MDRaisedButton: 
+            pos_hint: {'center_x': .5, 'center_y': .1}
+            size_hint_x: .9
+            text: 'Alterar'
+
+<CadastrarCard>:
+    pos_hint: {'center_x': .5, 'center_y': .5}
+    orientation: 'vertical'
+    size_hint: .7, .7
+    
+    MDBoxLayout: 
+        size_hint_y: .2
+        padding: [25, 0, 25, 0]
+        md_bg_color: app.theme_cls.primary_color
+
+        MDLabel:
+            text: 'Cadastro de usuário'
+            theme_text_color: 'Custom'
+            text_color: 1,1,1,1 
+        MDIconButton:
+            icon: "close"
+            theme_text_color: 'Custom'
+            text_color: 1,1,1,1 
+            on_release: root.fechar()
+            
+    MDFloatLayout: 
+
+        MDLabel:
+            id: result
+            text: ''
+            pos_hint: {'center_y': .95}
+            halign: 'center'
+
+        MDTextField:
+            id: newemail
+            pos_hint: {'center_x': .5, 'center_y': .8}
+            size_hint_x: .9
+            hint_text: 'E-mail'
+            mode: 'rectangle'
+        MDTextField:
+            id: newsenha
+            pos_hint: {'center_x': .5, 'center_y': .6}
+            size_hint_x: .9
+            hint_text: 'Senha:'
+            mode: 'rectangle'
+        MDTextField:
+            id: newconfsenha
+            pos_hint: {'center_x': .5, 'center_y': .4}
+            size_hint_x: .9
+            hint_text: 'Confirmar senha:'
+            mode: 'rectangle'
+        MDRaisedButton: 
+            pos_hint: {'center_x': .5, 'center_y': .2}
+            size_hint_x: .9
+            text: 'Cadastrar'
+            on_release: root.new_user(newemail.text, newsenha.text, newconfsenha.text)
+
+<TelaLogin>:
+    MDIconButton:
+        icon: 'wall'
+        theme_icon_color: "Custom"
+        icon_color: get_color_from_hex("#ADD8E6")
+        user_font_size: '75px'
+        pos_hint: {'center_x': .5, 'center_y': .8}
+    MDTextField:
+        id: email
+        size_hint_x: .9
+        hint_text: 'E-mail:'
+        pos_hint: {'center_x': .5, 'center_y': .6}
+        mode: 'rectangle'
+    MDTextField:
+        id: senha
+        size_hint_x: .9
+        hint_text: 'Senha:'
+        pos_hint: {'center_x': .5, 'center_y': .5}
+        mode: 'rectangle'
+        password: True
+    MDRaisedButton:
+        text: 'Login'
+        pos_hint: {'center_x': .5, 'center_y': .4}
+        size_hint_x: .9
+        on_release: root.valida_user()
+
+    MDRaisedButton:
+        size_hint_x: .2
+        pos_hint: {'center_x': .5, 'center_y': .3}
+        text: 'Cadastrar' 
+        on_release: root.cadastrar_card()
+
+    MDLabel: 
+        text: 'Esqueceu sua senha?'
+        halign: 'center'
+        pos_hint: {'center_y': .2}
+
+    MDRaisedButton:
+        size_hint_x: .2
+        pos_hint: {'center_x': .5, 'center_y': .1}
+        text: 'Clique aqui para\nredefinir senha!' 
+        on_release: root.abrir_card()
+
