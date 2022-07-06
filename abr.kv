@@ -50,7 +50,7 @@ TelaGerenciadora:
 
                         MDLabel:
                             id: indicador
-                            text: 'Rachaduras'  #Posso mudar ao pressionar os botões de seta
+                            text: 'Erupsões'  #Posso mudar ao pressionar os botões de seta
                             pos_hint: {'center_x': 0.5, 'center_y': 0.5}
                             halign: "center"
 
@@ -59,38 +59,43 @@ TelaGerenciadora:
                             text: 'Avaliar'
                             icon: 'star'
                             pos_hint: {'center_x': 0.5, 'center_y': 0.17}
-                            #on_release: root.saveInfo(barragens.text, indicador.text, contador.text)
-                            #on_release: root.selectDB()
+                            on_release: root.guarda_valor()
 
                         MDIconButton:
                             id: btn_voltar
                             pos_hint: {'center_x': 0.1, 'center_y': 0.5}
                             icon: 'arrow-left-drop-circle-outline'
-                            #on_release: root.Voltar()
+                            on_release: root.altera_indicador(1)
 
                         MDIconButton:
                             id: btn_proximo
                             pos_hint: {'center_x': 0.9, 'center_y': 0.5}
                             icon: 'arrow-right-drop-circle-outline'
-                            #on_release: root.Proximo()
+                            on_release: root.altera_indicador(2)
                             
                         MDIconButton:
                             id: acre
                             pos_hint: {'center_x': 0.6, 'center_y': 0.3}
                             icon: 'plus'
-                            #on_release: root.Incrementador()                 
+                            on_release: root.altera_nota(2)           
 
                         MDIconButton:
                             id: decre
                             pos_hint: {'center_x': 0.4, 'center_y': 0.3}
                             icon: 'minus'
-                            #on_release: root.Decrementador() 
+                            on_release: root.altera_nota(1)
 
                         MDLabel:
                             id: contador
                             text:'0'
                             halign: "center"
                             pos_hint: {'center_x': 0.5, 'center_y': 0.3}
+
+                        MDTextField:
+                            id: anotacao
+                            hint_text: 'Anotação'
+                            size_hint_x: .3
+                            pos_hint: {'center_x': 0.5, 'center_y': 0.4}
 
         MDNavigationDrawer:
             id: nav_drawer
@@ -161,7 +166,6 @@ TelaGerenciadora:
 <Tela3>:
     name: 'tela3'
 
-
     MDNavigationLayout:
 
         ScreenManager:
@@ -176,45 +180,8 @@ TelaGerenciadora:
                     specific_text_color: get_color_from_hex("#4a4939")
                     left_action_items:
                         [['menu', lambda x: nav_drawer.set_state("open")]]
-
-                BoxLayout:
-                    orientation: 'vertical'
-
-                    FloatLayout:
-                        MDLabel: 
-                            id: nome
-                            text: 'Nome: '
-                            pos_hint: { 'center_y': 0.6}
-                            halign: 'center'
-
-                        MDLabel:
-                            id: idade
-                            text: 'Coor: '
-                            pos_hint: { 'center_y': 0.5}
-                            halign: 'center'
-                        
-                        MDLabel:
-                            id: email
-                            text: 'Tipo: '
-                            pos_hint: { 'center_y': 0.4}
-                            halign: 'center'
-
-                        MDRaisedButton: 
-                            text: 'Select DB'
-                            on_release: root.selectDB()
-                            pos_hint: {'center_x': .5,'center_y': 0.3}
-                            size_hint_x: .5
-
-                        MDRaisedButton: 
-                            text: 'fechar banco'
-                            on_release: root.fecharDB()
-                            pos_hint: {'center_x': .1,'center_y': 0.1}
-                        MDLabel: 
-                            id: lbl_db_stats
-                            text: ''
-                            pos_hint: {'center_y': .2}
-
-
+#inserir ScrollView
+               
         MDNavigationDrawer:
             id: nav_drawer
             md_bg_color: get_color_from_hex("#ADD8E6")
@@ -285,14 +252,21 @@ TelaGerenciadora:
 
 
 
-
-
-
-
-
-
-
-
+<SelecionaBarragem>:
+    BoxLayout:
+        orientation:'vertical'
+        BoxLayout:
+            Label:
+                text: 'test'
+        BoxLayout:
+            Label:
+                text: 'test'
+        BoxLayout:
+            Label:
+                text: 'test'
+        BoxLayout:
+            Label:
+                text: 'test'
 
 
 
