@@ -77,12 +77,28 @@ for valor in check_select:
         cursor.execute("INSERT INTO Barragem VALUES (NULL, 'Tapacurá', '55800100')")
         cursor.execute("INSERT INTO Barragem VALUES (NULL, 'Goitá', '532036900')")
 
+        cursor.execute("INSERT INTO Barragem VALUES (NULL, 'Goitá', '532036900')")
+        cursor.execute("INSERT INTO Barragem VALUES (NULL, 'Tapacurá', '55800100')")
+        cursor.execute("INSERT INTO Barragem VALUES (NULL, 'Tapacurá', '55800100')")
+        cursor.execute("INSERT INTO Barragem VALUES (NULL, 'Goitá', '532036900')")
+        cursor.execute("INSERT INTO Barragem VALUES (NULL, 'Goitá', '532036900')")
+        cursor.execute("INSERT INTO Barragem VALUES (NULL, 'Goitá', '532036900')")
+        cursor.execute("INSERT INTO Barragem VALUES (NULL, 'Tapacurá', '55800100')")
+        cursor.execute("INSERT INTO Barragem VALUES (NULL, 'Goitá', '532036900')")
+        cursor.execute("INSERT INTO Barragem VALUES (NULL, 'Goitá', '532036900')")
+        cursor.execute("INSERT INTO Barragem VALUES (NULL, 'Goitá', '532036900')")
+        cursor.execute("INSERT INTO Barragem VALUES (NULL, 'Goitá', '532036900')")
+        cursor.execute("INSERT INTO Barragem VALUES (NULL, 'Goitá', '532036900')")
+        cursor.execute("INSERT INTO Barragem VALUES (NULL, 'Goitá', '532036900')")
+        cursor.execute("INSERT INTO Barragem VALUES (NULL, 'Goitá', '532036900')")
+
 
 
 banco.commit()
 
 indicadores = ['Erupsões', 'Escorregamento', 'Arvores', 'Rip-Rap', 'Buracos', 'Obstrucoes', 'Rachaduras']
 notas = ['0', '0', '0', '0', '0', '0', '0']
+barragem_selecionada = ['(SELECIONAR BARRAGEM)']
 
 class TelaGerenciadora(ScreenManager):
     pass
@@ -92,6 +108,10 @@ class Tela1(Screen):
 
 class Tela2(Screen):
     flag_indicador = 0
+
+    def selecina_barragem(self):
+        self.ids.barragens.text = barragem_selecionada[0]
+
     def altera_indicador(self, flag):
         if (flag == 1):
             #passa para a esquerda
@@ -148,11 +168,83 @@ class Tela2(Screen):
 
 # Tela do banco de dados
 class Tela3(Screen):
-    def adiciona(self):
-        self.ids.box.add_widget(SelecionaBarragem())
 
-class SelecionaBarragem(BoxLayout):
-    pass
+    barragem_selecionada
+
+    maximo = 5
+    minimo = 0
+    cont = 0 
+    nome1 = ''
+    nome2 = ''
+    nome3 = ''
+    nome4 = ''
+    nome5 = ''
+
+    def carrega_selecao(self):
+        try:
+            cursor.execute("SELECT * FROM Barragem")
+            lista_barragem = cursor.fetchall()
+
+            for valor in lista_barragem:
+                
+                index = lista_barragem.index(valor)
+                if index <= self.maximo and index >= self.minimo:
+
+                    if self.cont == 0: self.cont += 1
+
+                    elif self.cont == 1:
+                        self.nome1 = valor[1]
+                        self.ids.lb_1.text = f'  ID: {valor[0]} | NOME: {valor[1]}\n  COORDENADAS: {valor[2]}'
+                        self.cont += 1
+
+                    elif self.cont == 2:
+                        self.nome2 = valor[1]
+                        self.ids.lb_2.text = f'  ID: {valor[0]} | NOME: {valor[1]}\n  COORDENADAS: {valor[2]}'
+                        self.cont += 1
+
+                    elif self.cont == 3:
+                        self.nome3 = valor[1]
+                        self.ids.lb_3.text = f'  ID: {valor[0]} | NOME: {valor[1]}\n  COORDENADAS: {valor[2]}'
+                        self.cont += 1
+                    
+                    elif self.cont == 4:
+                        self.nome4 = valor[1]
+                        self.ids.lb_4.text = f'  ID: {valor[0]} | NOME: {valor[1]}\n  COORDENADAS: {valor[2]}'
+                        self.cont += 1
+
+                    elif self.cont == 5:
+                        self.nome5 = valor[1]
+                        self.ids.lb_5.text = f'  ID: {valor[0]} | NOME: {valor[1]}\n  COORDENADAS: {valor[2]}'
+        except:
+            print('Erro na seleção')
+
+    def nova_pagina(self):
+        self.maximo += 5
+        self.minimo += 5 
+        self.cont = 0
+
+    def antiga_pagina(self):
+        self.cont = 0
+        if self.maximo > 5:
+            self.maximo -= 5
+            self.minimo -= 5 
+
+    def btn_1(self):
+        barragem_selecionada[0] = self.nome1
+
+    def btn_2(self):
+        barragem_selecionada[0] = self.nome2
+
+    def btn_3(self):
+        barragem_selecionada[0] = self.nome2
+
+    def btn_4(self):
+        barragem_selecionada[0] = self.nome2
+
+    def btn_5(self):
+        barragem_selecionada[0] = self.nome2
+    
+    
 
 class ContentNavigationDrawer(BoxLayout):
     pass

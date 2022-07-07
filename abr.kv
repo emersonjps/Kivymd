@@ -47,6 +47,11 @@ TelaGerenciadora:
                             halign: "center"
                             height: '300dp'
                             pos_hint: {'center_x': 0.5, 'center_y': 0.7}
+                        MDRaisedButton:
+                            id: refresh
+                            text: 'refresh'
+                            pos_hint: {'center_x': 0.5, 'center_y': 0.05}
+                            on_release: root.selecina_barragem()
 
                         MDLabel:
                             id: indicador
@@ -66,24 +71,29 @@ TelaGerenciadora:
                             pos_hint: {'center_x': 0.1, 'center_y': 0.5}
                             icon: 'arrow-left-drop-circle-outline'
                             on_release: root.altera_indicador(1)
+                            icon_size: "40sp"
+
 
                         MDIconButton:
                             id: btn_proximo
                             pos_hint: {'center_x': 0.9, 'center_y': 0.5}
                             icon: 'arrow-right-drop-circle-outline'
                             on_release: root.altera_indicador(2)
-                            
+                            icon_size: "40sp"
+
                         MDIconButton:
                             id: acre
                             pos_hint: {'center_x': 0.6, 'center_y': 0.3}
                             icon: 'plus'
                             on_release: root.altera_nota(2)           
+                            icon_size: "30sp"
 
                         MDIconButton:
                             id: decre
                             pos_hint: {'center_x': 0.4, 'center_y': 0.3}
                             icon: 'minus'
                             on_release: root.altera_nota(1)
+                            icon_size: "30sp"
 
                         MDLabel:
                             id: contador
@@ -165,6 +175,9 @@ TelaGerenciadora:
 
 <Tela3>:
     name: 'tela3'
+    
+    ScrollView:
+
 
     MDNavigationLayout:
 
@@ -180,8 +193,122 @@ TelaGerenciadora:
                     specific_text_color: get_color_from_hex("#4a4939")
                     left_action_items:
                         [['menu', lambda x: nav_drawer.set_state("open")]]
-#inserir ScrollView
-               
+
+
+                FloatLayout: 
+
+                    MDTextField:
+                        id: text_pesquisa
+                        hint_text: 'id:'
+                        size_hint_x: 0.4
+                        pos_hint: {'center_x': 0.3, 'center_y': 0.8}  
+                    MDRaisedButton: 
+                        id: btn_pesquisa
+                        text: 'Pesquisar'
+                        pos_hint: {'center_x': 0.8, 'center_y': 0.8}  
+
+                    BoxLayout:
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.7}  
+                        MDLabel:
+                            id: lb_1
+                            text: ''
+                            halign: 'left'      
+                    MDRaisedButton:
+                        id: btn_1
+                        text: 'selecionar'
+                        pos_hint: {'center_x': 0.8, 'center_y': 0.7} 
+                        on_release: root.btn_1()
+                        on_release: 
+                            app.root.current = 'tela2' 
+
+                    BoxLayout:
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.6}  
+                        MDLabel:
+                            id: lb_2
+                            text: ''
+                            halign: 'left'      
+                    MDRaisedButton:
+                        id: btn_2
+                        text: 'selecionar'
+                        pos_hint: {'center_x': 0.8, 'center_y': 0.6}    
+                        on_release: root.btn_2()
+                        on_release: 
+                            app.root.current = 'tela2' 
+
+                    BoxLayout:
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.5}  
+                        MDLabel:
+                            id: lb_3
+                            text: ''
+                            halign: 'left'      
+                    MDRaisedButton:
+                        id: btn_3
+                        text: 'selecionar'
+                        pos_hint: {'center_x': 0.8, 'center_y': 0.5}    
+                        on_release: root.btn_3()
+                        on_release: 
+                            app.root.current = 'tela2' 
+
+                    BoxLayout:
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.4}  
+                        MDLabel:
+                            id: lb_4
+                            text: ''
+                            halign: 'left'      
+                    MDRaisedButton:
+                        id: btn_4
+                        text: 'selecionar'
+                        pos_hint: {'center_x': 0.8, 'center_y': 0.4} 
+                        on_release: root.btn_4()
+                        on_release: 
+                            app.root.current = 'tela2' 
+
+                    BoxLayout:
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.3}  
+                        MDLabel:
+                            id: lb_5
+                            text: ''
+                            halign: 'left'      
+                    MDRaisedButton:
+                        id: btn_5
+                        text: 'selecionar'
+                        pos_hint: {'center_x': 0.8, 'center_y': 0.3} 
+                        on_release: root.btn_5()
+                        on_release: 
+                            app.root.current = 'tela2' 
+                        
+                    MDRaisedButton:
+                        id: exibe
+                        text: 'Exibir'
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.2}  
+                        on_release: root.carrega_selecao()
+
+                    MDIconButton:
+                        icon: "database-arrow-left"
+                        theme_icon_color: "Custom"
+                        icon_color: 'black'     
+                        pos_hint: {'center_x': 0.3, 'center_y': 0.2}  
+                        icon_size: "50sp"   
+                        on_release: root.carrega_selecao()
+                        on_release: root.antiga_pagina()
+
+                    MDIconButton:
+                        icon: "database-arrow-right"
+                        theme_icon_color: "Custom"
+                        icon_color: 'black'     
+                        pos_hint: {'center_x': 0.7, 'center_y': 0.2}     
+                        icon_size: "50sp"
+                        on_release: root.carrega_selecao()
+                        on_release: root.nova_pagina()
+
+
+
+
+
+
+
+
+
         MDNavigationDrawer:
             id: nav_drawer
             md_bg_color: get_color_from_hex("#ADD8E6")
@@ -252,21 +379,7 @@ TelaGerenciadora:
 
 
 
-<SelecionaBarragem>:
-    BoxLayout:
-        orientation:'vertical'
-        BoxLayout:
-            Label:
-                text: 'test'
-        BoxLayout:
-            Label:
-                text: 'test'
-        BoxLayout:
-            Label:
-                text: 'test'
-        BoxLayout:
-            Label:
-                text: 'test'
+
 
 
 
