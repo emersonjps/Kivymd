@@ -4,6 +4,7 @@ TelaGerenciadora:
     Tela1:
     Tela2:
     Tela3:
+    Tela4:
 
 <Tela1>:
     name: 'tela1'
@@ -106,6 +107,11 @@ TelaGerenciadora:
                             hint_text: 'Anotação'
                             size_hint_x: .3
                             pos_hint: {'center_x': 0.5, 'center_y': 0.4}
+                        
+                        MDRaisedButton: 
+                            text: 'Finalizar'
+                            pos_hint: {'center_x': .8, 'center_y': .05}
+                            on_release: root.finaliza_avaliacao()
 
         MDNavigationDrawer:
             id: nav_drawer
@@ -141,8 +147,8 @@ TelaGerenciadora:
                                 app.root.current = 'tela2'  
 
                         MDRoundFlatIconButton: 
-                            icon: 'monitor-screenshot'
-                            text: 'Tela 2'
+                            icon: 'magnify-plus-outline'
+                            text: 'Selecionar barragem'
                             pos_hint: {'center_x': .5, 'center_y': .6}
                             size_hint_x: 1
                             text_color: 'black'
@@ -153,14 +159,16 @@ TelaGerenciadora:
                                 app.root.current = 'tela3'
 
                         MDRoundFlatIconButton: 
-                            icon: 'alien'
-                            text: 'inserir...'
+                            icon: 'bookmark-check-outline'
+                            text: 'Barragens avaliadas'
                             pos_hint: {'center_x': .5, 'center_y': .5}
                             size_hint_x: 1
                             text_color: 'black'
                             line_color: 'black'
                             theme_icon_color: "Custom"
                             icon_color: 'black'
+                            on_release:
+                                app.root.current = 'tela4'
 
                         MDRoundFlatIconButton: 
                             icon: 'alien'
@@ -173,12 +181,11 @@ TelaGerenciadora:
                             icon_color: 'black'
 
 
+
+
 <Tela3>:
     name: 'tela3'
     
-    ScrollView:
-
-
     MDNavigationLayout:
 
         ScreenManager:
@@ -206,6 +213,7 @@ TelaGerenciadora:
                         id: btn_pesquisa
                         text: 'Pesquisar'
                         pos_hint: {'center_x': 0.8, 'center_y': 0.8}  
+                        on_release: root.pesquisa_id()
 
                     BoxLayout:
                         pos_hint: {'center_x': 0.5, 'center_y': 0.7}  
@@ -301,14 +309,7 @@ TelaGerenciadora:
                         on_release: root.carrega_selecao()
                         on_release: root.nova_pagina()
 
-
-
-
-
-
-
-
-
+#-----------------------------------------------------------------------
         MDNavigationDrawer:
             id: nav_drawer
             md_bg_color: get_color_from_hex("#ADD8E6")
@@ -343,8 +344,8 @@ TelaGerenciadora:
                                 app.root.current = 'tela2'  
 
                         MDRoundFlatIconButton: 
-                            icon: 'monitor-screenshot'
-                            text: 'Tela 2'
+                            icon: 'magnify-plus-outline'
+                            text: 'Selecionar barragem'
                             pos_hint: {'center_x': .5, 'center_y': .6}
                             size_hint_x: 1
                             text_color: 'black'
@@ -355,14 +356,16 @@ TelaGerenciadora:
                                 app.root.current = 'tela3'
 
                         MDRoundFlatIconButton: 
-                            icon: 'alien'
-                            text: 'inserir...'
+                            icon: 'bookmark-check-outline'
+                            text: 'Barragens avaliadas'
                             pos_hint: {'center_x': .5, 'center_y': .5}
                             size_hint_x: 1
                             text_color: 'black'
                             line_color: 'black'
                             theme_icon_color: "Custom"
                             icon_color: 'black'
+                            on_release:
+                                app.root.current = 'tela4'
 
                         MDRoundFlatIconButton: 
                             icon: 'alien'
@@ -375,6 +378,186 @@ TelaGerenciadora:
                             icon_color: 'black'
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+<Tela4>:
+
+    name: 'tela4'
+    
+    MDNavigationLayout:
+
+        ScreenManager:
+
+            MDScreen:
+
+                MDToolbar:
+                    title: "ABR - analise de barragem Recife"
+                    elevation: 10
+                    pos_hint: {"top": 1}
+                    md_bg_color: get_color_from_hex("#87CEFA")
+                    specific_text_color: get_color_from_hex("#4a4939")
+                    left_action_items:
+                        [['menu', lambda x: nav_drawer.set_state("open")]]
+
+                FloatLayout:
+
+                    BoxLayout:
+                        pos_hint: {'center_x': 0.5, 'center_y': .8}  
+                        MDLabel:
+                            id: lb1
+                            text: "Nome:"
+                            halign: 'center'
+                    BoxLayout:
+                        pos_hint: {'center_x': 0.5, 'center_y': .75}  
+                        MDLabel:
+                            id: lb2
+                            text: "Erupsões:"
+                            halign: 'center'
+                    BoxLayout:    
+                        pos_hint: {'center_x': 0.5, 'center_y': .7}  
+                        MDLabel:
+                            id: lb3
+                            text: "Escorregamento:"
+                            halign: 'center'
+                    BoxLayout:
+                        pos_hint: {'center_x': 0.5, 'center_y': .65}  
+                        MDLabel:
+                            id: lb4
+                            text: "Arvores:"
+                            halign: 'center'
+                    BoxLayout:           
+                        pos_hint: {'center_x': 0.5, 'center_y': .6}  
+                        MDLabel:
+                            id: lb5
+                            text: "Rip-Rap:"
+                            halign: 'center'
+                    BoxLayout:
+                        pos_hint: {'center_x': 0.5, 'center_y': .55}  
+                        MDLabel:
+                            id: lb6
+                            text: "Buracos:"
+                            halign: 'center'
+                    BoxLayout:
+                        pos_hint: {'center_x': 0.5, 'center_y': .5}  
+                        MDLabel:
+                            id: lb7
+                            text: "Obstrucoes:"
+                            halign: 'center'                            
+                    BoxLayout:
+                        pos_hint: {'center_x': 0.5, 'center_y': .45}  
+                        MDLabel:
+                            id: lb8
+                            text: "Rachaduras:"
+                            halign: 'center'
+                    BoxLayout:
+                        pos_hint: {'center_x': 0.5, 'center_y': .4}  
+                        MDLabel:
+                            id: lb9
+                            text: "Anotação:"
+                            halign: 'center'
+
+
+
+                    MDRaisedButton:
+                        text: 'Exibir'
+                        pos_hint: {'center_x': 0.5, 'center_y': .1}  
+                        on_release: root.exibir_avaliados()
+
+                    MDIconButton:
+                        icon: "database-arrow-left"
+                        theme_icon_color: "Custom"
+                        icon_color: 'black'     
+                        pos_hint: {'center_x': 0.3, 'center_y': .1}  
+                        icon_size: "50sp"   
+                        on_release: root.exibir_avaliados()
+                        on_release: root.antiga_pagina()
+
+                    MDIconButton:
+                        icon: "database-arrow-right"
+                        theme_icon_color: "Custom"
+                        icon_color: 'black'     
+                        pos_hint: {'center_x': 0.7, 'center_y': .1}     
+                        icon_size: "50sp"
+                        on_release: root.exibir_avaliados()
+                        on_release: root.nova_pagina()
+
+#------------------------------------------------------------------------
+        MDNavigationDrawer:
+            id: nav_drawer
+            md_bg_color: get_color_from_hex("#ADD8E6")
+            anchor: 'left'
+
+            ContentNavigationDrawer:
+
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    MDFloatLayout:
+                        MDNavigationDrawerHeader:
+                            title: "Telas"
+                            text: "Consulta e informações"
+                            spacing: "4dp"
+                            padding: "12dp", 0, 0, "56dp"
+                            pos_hint: {'center_x': .5, 'center_y': .9}
+
+                        MDNavigationDrawerLabel:
+                            text: "Banco:"
+                            pos_hint: {'center_x': .5, 'center_y': .8}
+
+                        MDRoundFlatIconButton: 
+                            icon: 'home'
+                            text: 'Tela de avaliação'
+                            pos_hint: {'center_x': .5, 'center_y': .7}
+                            size_hint_x: 1
+                            text_color: 'black'
+                            line_color: 'black'
+                            theme_icon_color: "Custom"
+                            icon_color: 'black'
+                            on_release: 
+                                app.root.current = 'tela2'  
+
+                        MDRoundFlatIconButton: 
+                            icon: 'magnify-plus-outline'
+                            text: 'Selecionar barragem'
+                            pos_hint: {'center_x': .5, 'center_y': .6}
+                            size_hint_x: 1
+                            text_color: 'black'
+                            line_color: 'black'
+                            theme_icon_color: "Custom"
+                            icon_color: 'black'
+                            on_release: 
+                                app.root.current = 'tela3'
+
+                        MDRoundFlatIconButton: 
+                            icon: 'bookmark-check-outline'
+                            text: 'Barragens avaliadas'
+                            pos_hint: {'center_x': .5, 'center_y': .5}
+                            size_hint_x: 1
+                            text_color: 'black'
+                            line_color: 'black'
+                            theme_icon_color: "Custom"
+                            icon_color: 'black'
+                            on_release:
+                                app.root.current = 'tela4'
+
+                        MDRoundFlatIconButton: 
+                            icon: 'alien'
+                            text: 'inserir...'
+                            pos_hint: {'center_x': .5, 'center_y': .4}
+                            size_hint_x: 1
+                            text_color: 'black'
+                            line_color: 'black'
+                            theme_icon_color: "Custom"
+                            icon_color: 'black'
 
 
 
@@ -510,7 +693,7 @@ TelaGerenciadora:
             id: result
             text: ''
             pos_hint: {'center_y': .95}
-            halign: 'center'
+            halign: 'left'
 
         MDTextField:
             id: newemail

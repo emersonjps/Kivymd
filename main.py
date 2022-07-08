@@ -1,3 +1,5 @@
+from cgitb import text
+from locale import currency
 from operator import indexOf
 import smtplib
 import email.message
@@ -20,7 +22,8 @@ cursor.execute("PRAGMA foreign_keys=ON;")
 cursor.execute("""
     CREATE TABLE IF NOT EXISTS Barragem ( id INTEGER  PRIMARY KEY AUTOINCREMENT,
                                           Nome VARCHAR(60),
-                                          Coordena_gps CHAR(14)
+                                          Coordena_gps CHAR(14),
+                                          status INTEGER
                                           )
     """)
 
@@ -49,7 +52,7 @@ cursor.execute("""CREATE TABLE IF NOT EXISTS user (
                                                     )
     """)
 
-cursor.execute("INSERT INTO Barragem VALUES (NULL, 'inicio', '')")
+cursor.execute("INSERT INTO Barragem VALUES (NULL, 'inicio', '', 0)")
 cursor.execute("SELECT * FROM Barragem")
 check_select = cursor.fetchall()
 for valor in check_select:
@@ -73,26 +76,23 @@ for valor in check_select:
         cursor.execute("INSERT INTO Indicadores VALUES (NULL, 'Rachaduras')")
 
         # Inserindo barragens
-        cursor.execute("INSERT INTO Barragem VALUES (NULL, 'Duas Unas', '54010050')")
-        cursor.execute("INSERT INTO Barragem VALUES (NULL, 'Tapacurá', '55800100')")
-        cursor.execute("INSERT INTO Barragem VALUES (NULL, 'Goitá', '532036900')")
-
-        cursor.execute("INSERT INTO Barragem VALUES (NULL, 'Goitá', '532036900')")
-        cursor.execute("INSERT INTO Barragem VALUES (NULL, 'Tapacurá', '55800100')")
-        cursor.execute("INSERT INTO Barragem VALUES (NULL, 'Tapacurá', '55800100')")
-        cursor.execute("INSERT INTO Barragem VALUES (NULL, 'Goitá', '532036900')")
-        cursor.execute("INSERT INTO Barragem VALUES (NULL, 'Goitá', '532036900')")
-        cursor.execute("INSERT INTO Barragem VALUES (NULL, 'Goitá', '532036900')")
-        cursor.execute("INSERT INTO Barragem VALUES (NULL, 'Tapacurá', '55800100')")
-        cursor.execute("INSERT INTO Barragem VALUES (NULL, 'Goitá', '532036900')")
-        cursor.execute("INSERT INTO Barragem VALUES (NULL, 'Goitá', '532036900')")
-        cursor.execute("INSERT INTO Barragem VALUES (NULL, 'Goitá', '532036900')")
-        cursor.execute("INSERT INTO Barragem VALUES (NULL, 'Goitá', '532036900')")
-        cursor.execute("INSERT INTO Barragem VALUES (NULL, 'Goitá', '532036900')")
-        cursor.execute("INSERT INTO Barragem VALUES (NULL, 'Goitá', '532036900')")
-        cursor.execute("INSERT INTO Barragem VALUES (NULL, 'Goitá', '532036900')")
-
-
+        cursor.execute("INSERT INTO Barragem VALUES (NULL, 'Duas Unas', '54010050', 0)")
+        cursor.execute("INSERT INTO Barragem VALUES (NULL, 'Tapacurá', '55800100', 0)")
+        cursor.execute("INSERT INTO Barragem VALUES (NULL, 'Goitá', '532036900', 0)")
+        cursor.execute("INSERT INTO Barragem VALUES (NULL, 'Xingó', '532036900', 0)")
+        cursor.execute("INSERT INTO Barragem VALUES (NULL, 'Cachoeira Caldeirão', '55800100', 0)")
+        cursor.execute("INSERT INTO Barragem VALUES (NULL, 'Santo Antonio do Jari', '55800100', 0)")
+        cursor.execute("INSERT INTO Barragem VALUES (NULL, 'Coaracy Nunes', '532036900', 0)")
+        cursor.execute("INSERT INTO Barragem VALUES (NULL, 'Ferreira Gomes', '532036900', 0)")
+        cursor.execute("INSERT INTO Barragem VALUES (NULL, 'Balbina', '532036900', 0)")
+        cursor.execute("INSERT INTO Barragem VALUES (NULL, 'Sobradinho', '55800100', 0)")
+        cursor.execute("INSERT INTO Barragem VALUES (NULL, 'Itaparica', '532036900', 0)")
+        cursor.execute("INSERT INTO Barragem VALUES (NULL, 'Pedra do Cavalo', '532036900', 0)")
+        cursor.execute("INSERT INTO Barragem VALUES (NULL, 'Moxotó', '532036900', 0)")
+        cursor.execute("INSERT INTO Barragem VALUES (NULL, 'Paulo Afonso IV', '532036900', 0)")
+        cursor.execute("INSERT INTO Barragem VALUES (NULL, 'Itapebi', '532036900', 0)")
+        cursor.execute("INSERT INTO Barragem VALUES (NULL, 'Paulo Afonso I', '532036900', 0)")
+        cursor.execute("INSERT INTO Barragem VALUES (NULL, 'Paulo Afonso II', '532036900', 0)")
 
 banco.commit()
 
@@ -108,6 +108,18 @@ class Tela1(Screen):
 
 class Tela2(Screen):
     flag_indicador = 0
+
+    def finaliza_avaliacao(self):
+
+        cursor.execute("SELECT * FROM Barragem")
+        resultado = cursor.fetchall()
+        for valor in resultado:
+            if valor[1] == barragem_selecionada[0]:
+                cursor.execute(f"UPDATE Barragem SET status = 1 WHERE id = {valor[0]}")
+                print(f"UPDATE Barragem SET status = 1 WHERE id = {valor[0]}")
+                banco.commit()
+
+                self.cursor = banco.cursor()
 
     def selecina_barragem(self):
         self.ids.barragens.text = barragem_selecionada[0]
@@ -149,7 +161,15 @@ class Tela2(Screen):
             nota = self.ids.contador.text
             anotacao = self.ids.anotacao.text
 
-            id_barragem = 3
+            cursor.execute("SELECT * FROM Barragem")
+            resulatado = cursor.fetchall()
+
+            id_barragem = 0
+
+            print(barragem_selecionada)
+            for valor in resulatado:
+                if valor[1] == barragem_selecionada[0]:
+                    id_barragem = valor[0]
 
             id_indicador = 0
             if self.ids.indicador.text == 'Erupsões': id_indicador = 1
@@ -181,6 +201,7 @@ class Tela3(Screen):
     nome5 = ''
 
     def carrega_selecao(self):
+        print('primeiro')
         try:
             cursor.execute("SELECT * FROM Barragem")
             lista_barragem = cursor.fetchall()
@@ -219,6 +240,7 @@ class Tela3(Screen):
             print('Erro na seleção')
 
     def nova_pagina(self):
+        print('segunfo')
         self.maximo += 5
         self.minimo += 5 
         self.cont = 0
@@ -229,6 +251,22 @@ class Tela3(Screen):
             self.maximo -= 5
             self.minimo -= 5 
 
+    def pesquisa_id(self):
+        cursor.execute("SELECT * FROM Barragem")
+        barragens = cursor.fetchall()
+        for valor in barragens:
+            if valor[0] == int(self.ids.text_pesquisa.text):
+                self.ids.lb_1.text = f'  ID: {valor[0]} | NOME: {valor[1]}\n  COORDENADAS: {valor[2]}'
+                self.ids.lb_2.text = ''
+                self.ids.lb_3.text = ''
+                self.ids.lb_4.text = ''
+                self.ids.lb_5.text = ''
+                self.nome1 = valor[1]
+                self.nome2 = ''
+                self.nome3 = ''
+                self.nome4 = ''
+                self.nome5 = ''
+
     def btn_1(self):
         barragem_selecionada[0] = self.nome1
 
@@ -236,15 +274,69 @@ class Tela3(Screen):
         barragem_selecionada[0] = self.nome2
 
     def btn_3(self):
-        barragem_selecionada[0] = self.nome2
+        barragem_selecionada[0] = self.nome3
 
     def btn_4(self):
-        barragem_selecionada[0] = self.nome2
+        barragem_selecionada[0] = self.nome4
 
     def btn_5(self):
-        barragem_selecionada[0] = self.nome2
-    
-    
+        barragem_selecionada[0] = self.nome5
+
+
+class Tela4(Screen):
+    maximo = 8
+    minimo = 0
+    cont = 0
+    def exibir_avaliados(self):
+
+        cursor.execute("""
+        SELECT * 
+        FROM Barragem 
+        INNER JOIN Apresenta ON Apresenta.id_Barragem = Barragem.id
+        WHERE status = 1
+        """)
+        resultado = cursor.fetchall()
+
+        print('estou na função')
+        for valor in resultado:
+            print(resultado.index(valor))
+            index = resultado.index(valor)
+
+            print(valor)
+            if index <= self.maximo and index >= self.minimo:
+
+                if self.cont == 0:
+                    self.ids.lb1.text = f'Nome: {valor[1]}'
+                    self.ids.lb9.text = f'Anotação: {valor[5]}'
+                    self.ids.lb2.text = f'Erupsões: {valor[4]}' 
+                if self.cont == 1: 
+                    self.ids.lb3.text = f'Escorregamento: {valor[4]}'
+                if self.cont == 2:
+                    self.ids.lb4.text = f'Arvores: {valor[4]}'
+                if self.cont == 3: 
+                    self.ids.lb5.text = f'Rip-Rap: {valor[4]}'
+                if self.cont == 4:
+                    self.ids.lb6.text = f'Buracos: {valor[4]}'
+                if self.cont == 5: 
+                    self.ids.lb7.text = f'Obstrucoes: {valor[4]}'
+                if self.cont == 6:
+                    self.ids.lb8.text = f'Rachaduras: {valor[4]}'                   
+
+                self.cont += 1
+                if self.cont == 7: self.cont = 0
+
+
+    def nova_pagina(self):
+        print('segunfo')
+        self.maximo += 8
+        self.minimo += 8 
+        self.cont = 0
+
+    def antiga_pagina(self):
+        self.cont = 0
+        if self.maximo > 5:
+            self.maximo -= 8
+            self.minimo -= 8 
 
 class ContentNavigationDrawer(BoxLayout):
     pass
@@ -318,7 +410,7 @@ class CadastrarCard(MDCard):
                 return
             else:
                 print('cadastrado!')
-                self.ids.result.text = 'Cadastrado com sucesso'
+                self.ids.result.text = '                 Cadastrado com sucesso'
                 print(email)
                 print(senha)
 
@@ -349,7 +441,6 @@ class TelaLogin(FloatLayout):
                 self.ids.senha.text == value[2]
             ):           
                 self.add_widget(LoginCard())
-
 
 class MeuAplicativo(MDApp):
     def build(self):
