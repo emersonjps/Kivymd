@@ -1,6 +1,3 @@
-from cgitb import text
-from locale import currency
-from operator import indexOf
 import smtplib
 import email.message
 
@@ -9,7 +6,6 @@ from kivymd.uix.card import MDCard
 from kivymd.uix.floatlayout import FloatLayout
 from kivymd.uix.boxlayout import BoxLayout
 from kivy.uix.screenmanager import Screen, ScreenManager
-from kivy.uix.scrollview import ScrollView
 from kivy.lang import Builder
 
 import sqlite3
@@ -337,6 +333,9 @@ class Tela4(Screen):
         if self.maximo > 5:
             self.maximo -= 8
             self.minimo -= 8 
+
+class TelaAvalia(Screen):
+    pass
 
 class ContentNavigationDrawer(BoxLayout):
     pass

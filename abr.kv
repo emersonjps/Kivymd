@@ -5,6 +5,7 @@ TelaGerenciadora:
     Tela2:
     Tela3:
     Tela4:
+    TelaAvalia:
 
 <Tela1>:
     name: 'tela1'
@@ -179,7 +180,8 @@ TelaGerenciadora:
                             line_color: 'black'
                             theme_icon_color: "Custom"
                             icon_color: 'black'
-
+                            on_release:
+                                app.root.current = 'telaAvalia'
 
 
 
@@ -559,6 +561,225 @@ TelaGerenciadora:
                             theme_icon_color: "Custom"
                             icon_color: 'black'
 
+
+
+
+
+
+
+<Check@MDCheckbox>:
+    # group: 'group'
+    size_hint: None, None
+    size: dp(48), dp(48)
+
+
+
+<TelaAvalia>:
+    name: 'telaAvalia'
+    
+    MDNavigationLayout:
+
+        ScreenManager:
+
+            MDScreen:
+
+                MDToolbar:
+                    title: "ABR - analise de barragem Recife"
+                    elevation: 10
+                    pos_hint: {"top": 1}
+                    md_bg_color: get_color_from_hex("#87CEFA")
+                    specific_text_color: get_color_from_hex("#4a4939")
+                    left_action_items:
+                        [['menu', lambda x: nav_drawer.set_state("open")]]
+
+                FloatLayout:
+                    BoxLayout:
+                        pos_hint: {'center_x': .5, 'center_y': .85}
+                        MDLabel:
+                            text: 'SITUAÇÃO'
+                            halign: 'center'
+                    BoxLayout:
+                        pos_hint: {'center_x': .5, 'center_y': .45}
+                        MDLabel:
+                            text: 'MAGNETUDE'
+                            halign: 'center'
+                    BoxLayout:
+                        pos_hint: {'center_x': .5, 'center_y': .21}
+                        MDLabel:
+                            text: 'NÍVEL DE PERIGO: (NP)'
+                            halign: 'center'                                                        
+                    BoxLayout:
+                        orientation: 'vertical'
+                        BoxLayout:
+                            size_hint_y: .15
+                        BoxLayout:
+                            GridLayout:
+                                cols: 4
+                                # row_force_default: True
+                                # row_default_height: 45
+
+                                MDLabel:
+                                MDLabel:
+                                MDLabel:
+                                MDLabel:
+                                MDLabel:
+                                    halign: 'right'
+                                    text: 'NA'
+                                    text_color: 'black'
+                                Check:
+                                MDLabel:
+                                    halign: 'right'
+                                    text: 'NE'
+                                    text_color: 'black'
+                                Check:
+                                MDLabel:
+                                    halign: 'right'
+                                    text: 'PV'
+                                    text_color: 'black'
+                                Check:
+                                MDLabel:
+                                    halign: 'right'
+                                    text: 'DS'
+                                    text_color: 'black'
+                                Check:
+                                MDLabel:
+                                    halign: 'right'
+                                    text: 'DI'
+                                    text_color: 'black'
+                                Check:
+                                MDLabel:
+                                    halign: 'right'
+                                    text: 'PC'
+                                    text_color: 'black'
+                                Check:
+                                MDLabel:
+                                    halign: 'right'
+                                    text: 'AU'
+                                    text_color: 'black'
+                                Check:
+                                MDLabel:
+                                    halign: 'right'
+                                    text: 'NI'
+                                    text_color: 'black'
+                                Check:
+
+                                MDLabel:
+                                MDLabel:
+                                MDLabel:
+                                MDLabel:
+                                MDLabel:
+                                    halign: 'right'
+                                    text: 'I'
+                                    text_color: 'black'
+                                Check:                           
+                                MDLabel:
+                                    halign: 'right'
+                                    text: 'P'
+                                    text_color: 'black'
+                                Check:                            
+                                MDLabel:
+                                    halign: 'right'
+                                    text: 'T'
+                                    text_color: 'black'
+                                Check:                            
+                                MDLabel:
+                                    halign: 'right'
+                                    text: 'G'
+                                    text_color: 'black'
+                                Check:      
+
+                                MDLabel:
+                                MDLabel:
+                                MDLabel:
+                                MDLabel:
+                                MDLabel:    
+                                    halign: 'right'
+                                    text: '0'
+                                    text_color: 'black'
+                                Check:                           
+                                MDLabel:
+                                    halign: 'right'
+                                    text: '1'
+                                    text_color: 'black'
+                                Check:                            
+                                MDLabel:
+                                    halign: 'right'
+                                    text: '2'
+                                    text_color: 'black'
+                                Check:                            
+                                MDLabel:
+                                    halign: 'right'
+                                    text: '3'
+                                    text_color: 'black'
+                                Check:      
+
+#---------------//---------------------------------------------------------
+        MDNavigationDrawer:
+            id: nav_drawer
+            md_bg_color: get_color_from_hex("#ADD8E6")
+            anchor: 'left'
+
+            ContentNavigationDrawer:
+
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    MDFloatLayout:
+                        MDNavigationDrawerHeader:
+                            title: "Telas"
+                            text: "Consulta e informações"
+                            spacing: "4dp"
+                            padding: "12dp", 0, 0, "56dp"
+                            pos_hint: {'center_x': .5, 'center_y': .9}
+
+                        MDNavigationDrawerLabel:
+                            text: "Banco:"
+                            pos_hint: {'center_x': .5, 'center_y': .8}
+
+                        MDRoundFlatIconButton: 
+                            icon: 'home'
+                            text: 'Tela de avaliação'
+                            pos_hint: {'center_x': .5, 'center_y': .7}
+                            size_hint_x: 1
+                            text_color: 'black'
+                            line_color: 'black'
+                            theme_icon_color: "Custom"
+                            icon_color: 'black'
+                            on_release: 
+                                app.root.current = 'tela2'  
+
+                        MDRoundFlatIconButton: 
+                            icon: 'magnify-plus-outline'
+                            text: 'Selecionar barragem'
+                            pos_hint: {'center_x': .5, 'center_y': .6}
+                            size_hint_x: 1
+                            text_color: 'black'
+                            line_color: 'black'
+                            theme_icon_color: "Custom"
+                            icon_color: 'black'
+                            on_release: 
+                                app.root.current = 'tela3'
+
+                        MDRoundFlatIconButton: 
+                            icon: 'bookmark-check-outline'
+                            text: 'Barragens avaliadas'
+                            pos_hint: {'center_x': .5, 'center_y': .5}
+                            size_hint_x: 1
+                            text_color: 'black'
+                            line_color: 'black'
+                            theme_icon_color: "Custom"
+                            icon_color: 'black'
+                            on_release:
+                                app.root.current = 'tela4'
+
+                        MDRoundFlatIconButton: 
+                            icon: 'alien'
+                            text: 'inserir...'
+                            pos_hint: {'center_x': .5, 'center_y': .4}
+                            size_hint_x: 1
+                            text_color: 'black'
+                            line_color: 'black'
+                            theme_icon_color: "Custom"
+                            icon_color: 'black'
 
 
 
