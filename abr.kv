@@ -594,124 +594,108 @@ TelaGerenciadora:
 
                 FloatLayout:
                     BoxLayout:
-                        pos_hint: {'center_x': .5, 'center_y': .85}
-                        MDLabel:
-                            text: 'SITUAÇÃO'
-                            halign: 'center'
+                        pos_hint: {'center_x': 0.6, 'center_y': 0.85}
+                        MDLabel: 
+                            id: nome_barragem
+                            text: '( NOME BARRAGEM )'
+                            text_color: 'black'
                     BoxLayout:
-                        pos_hint: {'center_x': .5, 'center_y': .45}
-                        MDLabel:
-                            text: 'MAGNETUDE'
-                            halign: 'center'
+                        pos_hint: {'center_x': 0.6, 'center_y': 0.78}
+                        MDLabel: 
+                            id: indicador
+                            text: '-- INDICADOR --'                        
+                            text_color: 'black'
                     BoxLayout:
-                        pos_hint: {'center_x': .5, 'center_y': .21}
-                        MDLabel:
-                            text: 'NÍVEL DE PERIGO: (NP)'
-                            halign: 'center'                                                        
+                        pos_hint: {'center_x': 0.6, 'center_y': 0.7}
+                        MDLabel: 
+                            id: indicador
+                            text: 'SITUAÇÃO: ( )'
+                            text_color: 'black'
+
+                    MDRaisedButton:
+                        pos_hint: {'center_x': 0.2, 'center_y': 0.62}
+                        text: 'NA'
+                    MDRaisedButton:
+                        pos_hint: {'center_x': 0.4, 'center_y': 0.62}
+                        text: 'NE'
+                    MDRaisedButton:
+                        pos_hint: {'center_x': 0.6, 'center_y': 0.62}
+                        text: 'PV'
+                    MDRaisedButton:
+                        pos_hint: {'center_x': 0.8, 'center_y': 0.62}
+                        text: 'DS'
+                    MDRaisedButton:
+                        pos_hint: {'center_x': 0.2, 'center_y': 0.54}
+                        text: 'DI'
+                    MDRaisedButton:
+                        pos_hint: {'center_x': 0.4, 'center_y': 0.54}
+                        text: 'PC'
+                    MDRaisedButton:
+                        pos_hint: {'center_x': 0.6, 'center_y': 0.54}
+                        text: 'AU'
+                    MDRaisedButton:
+                        pos_hint: {'center_x': 0.8, 'center_y': 0.54}
+                        text: 'NI'
+
                     BoxLayout:
-                        orientation: 'vertical'
-                        BoxLayout:
-                            size_hint_y: .15
-                        BoxLayout:
-                            GridLayout:
-                                cols: 4
-                                # row_force_default: True
-                                # row_default_height: 45
+                        pos_hint: {'center_x': 0.6, 'center_y': 0.46}
+                        MDLabel: 
+                            id: indicador
+                            text: 'MAGNETUDE: ( )'          
+                            text_color: 'black'    
+                    MDRaisedButton:
+                        pos_hint: {'center_x': 0.2, 'center_y': 0.39}
+                        text: 'I'
+                    MDRaisedButton:
+                        pos_hint: {'center_x': 0.4, 'center_y': 0.39}
+                        text: 'P'
+                    MDRaisedButton:
+                        pos_hint: {'center_x': 0.6, 'center_y': 0.39}
+                        text: 'T'
+                    MDRaisedButton:
+                        pos_hint: {'center_x': 0.8, 'center_y': 0.39}
+                        text: 'G'
 
-                                MDLabel:
-                                MDLabel:
-                                MDLabel:
-                                MDLabel:
-                                MDLabel:
-                                    halign: 'right'
-                                    text: 'NA'
-                                    text_color: 'black'
-                                Check:
-                                MDLabel:
-                                    halign: 'right'
-                                    text: 'NE'
-                                    text_color: 'black'
-                                Check:
-                                MDLabel:
-                                    halign: 'right'
-                                    text: 'PV'
-                                    text_color: 'black'
-                                Check:
-                                MDLabel:
-                                    halign: 'right'
-                                    text: 'DS'
-                                    text_color: 'black'
-                                Check:
-                                MDLabel:
-                                    halign: 'right'
-                                    text: 'DI'
-                                    text_color: 'black'
-                                Check:
-                                MDLabel:
-                                    halign: 'right'
-                                    text: 'PC'
-                                    text_color: 'black'
-                                Check:
-                                MDLabel:
-                                    halign: 'right'
-                                    text: 'AU'
-                                    text_color: 'black'
-                                Check:
-                                MDLabel:
-                                    halign: 'right'
-                                    text: 'NI'
-                                    text_color: 'black'
-                                Check:
 
-                                MDLabel:
-                                MDLabel:
-                                MDLabel:
-                                MDLabel:
-                                MDLabel:
-                                    halign: 'right'
-                                    text: 'I'
-                                    text_color: 'black'
-                                Check:                           
-                                MDLabel:
-                                    halign: 'right'
-                                    text: 'P'
-                                    text_color: 'black'
-                                Check:                            
-                                MDLabel:
-                                    halign: 'right'
-                                    text: 'T'
-                                    text_color: 'black'
-                                Check:                            
-                                MDLabel:
-                                    halign: 'right'
-                                    text: 'G'
-                                    text_color: 'black'
-                                Check:      
 
-                                MDLabel:
-                                MDLabel:
-                                MDLabel:
-                                MDLabel:
-                                MDLabel:    
-                                    halign: 'right'
-                                    text: '0'
-                                    text_color: 'black'
-                                Check:                           
-                                MDLabel:
-                                    halign: 'right'
-                                    text: '1'
-                                    text_color: 'black'
-                                Check:                            
-                                MDLabel:
-                                    halign: 'right'
-                                    text: '2'
-                                    text_color: 'black'
-                                Check:                            
-                                MDLabel:
-                                    halign: 'right'
-                                    text: '3'
-                                    text_color: 'black'
-                                Check:      
+                    BoxLayout:
+                        pos_hint: {'center_x': 0.6, 'center_y': 0.3}
+                        MDLabel: 
+                            id: indicador
+                            text: 'NP: ( )'     
+                            text_color: 'black'
+                    MDRaisedButton:
+                        pos_hint: {'center_x': 0.2, 'center_y': 0.23}
+                        text: '0'
+                    MDRaisedButton:
+                        pos_hint: {'center_x': 0.4, 'center_y': 0.23}
+                        text: '1'
+                    MDRaisedButton:
+                        pos_hint: {'center_x': 0.6, 'center_y': 0.23}
+                        text: '2'
+                    MDRaisedButton:
+                        pos_hint: {'center_x': 0.8, 'center_y': 0.23}
+                        text: '3'      
+
+                        
+                    MDIconButton:
+                        id: btn_voltar
+                        pos_hint: {'center_x': 0.1, 'center_y': 0.1}
+                        icon: 'arrow-left-drop-circle-outline'
+                        icon_size: "40sp"
+
+                    BoxLayout:
+                        pos_hint: {'center_x': 1, 'center_y': 0.1}
+                        MDLabel: 
+                            id: indicador
+                            text: '1/7'     
+                            text_color: 'black'
+
+                    MDIconButton:
+                        id: btn_proximo
+                        pos_hint: {'center_x': 0.9, 'center_y': 0.1}
+                        icon: 'arrow-right-drop-circle-outline'
+                        icon_size: "40sp"
 
 #---------------//---------------------------------------------------------
         MDNavigationDrawer:
