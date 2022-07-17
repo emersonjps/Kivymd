@@ -1,10 +1,10 @@
 [app]
 
 # (str) Title of your application
-title = Teste buildozer
+title = Relatório de barragens
 
 # (str) Package name
-package.name = TesteBuildozer
+package.name = relatorioBarragem
 
 # (str) Package domain (needed for android/ios packaging)
 package.domain = org.test

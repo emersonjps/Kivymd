@@ -48,6 +48,16 @@ cursor.execute("""CREATE TABLE IF NOT EXISTS user (
                                                     )
     """)
 
+cursor.execute("""CREATE TABLE IF NOT EXISTS metaIndicador (
+                                                    nome TEXT, 
+                                                    valor TEXT,
+                                                    id_Indicadores INTEGER,
+                                                    id_Barragem INTEGER,
+                                                    FOREIGN KEY ( id_Barragem ) REFERENCES Barragem(id),
+                                                    FOREIGN KEY ( id_Indicadores ) REFERENCES Indicadores(id)
+                                                    )
+    """)
+
 cursor.execute("INSERT INTO Barragem VALUES (NULL, 'inicio', '', 0)")
 cursor.execute("SELECT * FROM Barragem")
 check_select = cursor.fetchall()
@@ -334,8 +344,200 @@ class Tela4(Screen):
             self.maximo -= 8
             self.minimo -= 8 
 
+subIndece = ['', '', '', 10]
+contadorIndicador = [0]
 class TelaAvalia(Screen):
-    pass
+
+#Funções de ecolha da situação
+#-------------------------------------------------
+    def NA(self):
+        self.ids.situacao.text = "SITUAÇÃO: ( NA )"
+        subIndece[0] = 'NA'
+        print(subIndece[0])
+
+    def NE(self):
+        self.ids.situacao.text = "SITUAÇÃO: ( NE )"
+        subIndece[0] = 'NE'
+        print(subIndece[0])
+
+    def PV(self):
+        self.ids.situacao.text = "SITUAÇÃO: ( PV )"
+        subIndece[0] = 'PV'
+        print(subIndece[0])
+
+    def DS(self):
+        self.ids.situacao.text = "SITUAÇÃO: ( DS )"
+        subIndece[0] = 'DS'
+        print(subIndece[0])   
+
+    def DI(self):
+        self.ids.situacao.text = "SITUAÇÃO: ( DI )"
+        subIndece[0] = 'DI'
+        print(subIndece[0])
+
+    def PC(self):
+        self.ids.situacao.text = "SITUAÇÃO: ( PC )"
+        subIndece[0] = 'PC'
+        print(subIndece[0])
+                
+    def AU(self):
+        self.ids.situacao.text = "SITUAÇÃO: ( AU )"
+        subIndece[0] = 'AU'
+        print(subIndece[0])
+                
+    def NI(self):
+        self.ids.situacao.text = "SITUAÇÃO: ( NI )"
+        subIndece[0] = 'NI'
+        print(subIndece[0])
+#---------------------------------------------------              
+#---------------------------------------------------              
+
+
+#Funções de escolha da magnetude
+#---------------------------------------------------                
+    def I(self):
+        self.ids.magnetude.text = "MAGNETUDE: ( I )"
+        subIndece[1] = 'I'
+        print(subIndece[1])
+
+    def P(self):
+        self.ids.magnetude.text = "MAGNETUDE: ( P )"
+        subIndece[1] = 'P'
+        print(subIndece[1])
+                
+    def T(self):
+        self.ids.magnetude.text = "MAGNETUDE: ( T )"
+        subIndece[1] = 'T'
+        print(subIndece[1])
+                
+    def G(self):
+        self.ids.magnetude.text = "MAGNETUDE: ( G )"
+        subIndece[1] = 'G'
+        print(subIndece[1])
+#---------------------------------------------------              
+#---------------------------------------------------              
+
+#Funções de escolha da magnetude
+#---------------------------------------------------                
+    def _0(self):
+        self.ids.np.text = "NP: ( 0 )"
+        subIndece[2] = '0'
+        print(subIndece[2])
+
+    def _1(self):
+        self.ids.np.text = "NP: ( 1 )"
+        subIndece[2] = '1'
+        print(subIndece[2])
+                
+    def _2(self):
+        self.ids.np.text = "NP: ( 2 )"
+        subIndece[2] = '2'
+        print(subIndece[2])
+                
+    def _3(self):
+        self.ids.np.text = "NP: ( 3 )"
+        subIndece[2] = 'G'
+        print(subIndece[2])
+#---------------------------------------------------              
+#---------------------------------------------------   
+
+    def proximo(self):
+        try:
+            cursor.execute("SELECT * FROM Indicadores")
+            listaIndicador = cursor.fetchall()
+
+            if  subIndece[0] == '' or subIndece[1] == '' or subIndece[2] == '':
+                if  subIndece[0] == '':     self.ids.statusSituacao.text = 'Falta preencher!'
+                else:                       self.ids.statusSituacao.text = ''
+                if subIndece[1] == '':      self.ids.statusMagnetude.text = 'Falta preencher!'
+                else:                       self.ids.statusMagnetude.text = ''
+                if subIndece[2] == '':      self.ids.statusNp.text = 'Falta preencher!'
+                else:                       self.ids.statusNp.text = ''
+
+            elif listaIndicador[contadorIndicador[0]][1] == self.ids.indicador.text:
+
+
+
+
+                cursor.execute(f"""
+                SELECT * 
+                FROM metaIndicador 
+                WHERE id_indicadores = {contadorIndicador[0] + 2}
+                """)
+                resultado = cursor.fetchall()
+                if resultado != []:
+                    contadorIndicador[0] += 1
+                    print(resultado)
+                    self.ids.indicador.text = listaIndicador[contadorIndicador[0]][1]
+                    self.ids.quantidade.text = f"{contadorIndicador[0] + 1}/7"
+
+                    self.ids.situacao.text = f'SITUAÇÃO: ( {resultado[0][1]} )'
+                    self.ids.magnetude.text = f'MAGNETUDE: ( {resultado[1][1]} )'  
+                    self.ids.np.text = f'NP: ( {resultado[2][1]} )'
+                    subIndece[0] = f'{resultado[0][1]}'
+                    subIndece[1] = f'{resultado[1][1]}'
+                    subIndece[2] = f'{resultado[2][1]}'
+
+                else: 
+                    cursor.execute(f"INSERT INTO metaIndicador VALUES ('SITUAÇÃO', '{subIndece[0]}', {int(listaIndicador[contadorIndicador[0]][0])}, {int(subIndece[3])})")
+                    cursor.execute(f"INSERT INTO metaIndicador VALUES ('MAGNETUDE', '{subIndece[1]}', {int(listaIndicador[contadorIndicador[0]][0])}, {int(subIndece[3])})")
+                    cursor.execute(f"INSERT INTO metaIndicador VALUES ('NP', '{subIndece[2]}', {int(listaIndicador[contadorIndicador[0]][0])}, {int(subIndece[3])})")
+
+                    banco.commit()
+
+                    contadorIndicador[0] += 1
+                    self.ids.indicador.text = listaIndicador[contadorIndicador[0]][1]
+                    
+                    self.ids.quantidade.text = f"{contadorIndicador[0] + 1}/7"
+
+                    self.ids.situacao.text = 'SITUAÇÃO: ( )'
+                    self.ids.magnetude.text = 'MAGNETUDE: ( )'  
+                    self.ids.np.text = 'NP: ( )'
+                    subIndece[0] = ''
+                    subIndece[1] = ''
+                    subIndece[2] = ''
+                    self.ids.statusSituacao.text = ''
+                    self.ids.statusMagnetude.text = ''
+                    self.ids.statusNp.text = ''
+        except:
+            pass
+
+    def voltar(self):
+        try:
+            # consulda o banco para comparações de indicadores 
+            cursor.execute("SELECT * FROM Indicadores")
+            listaIndicador = cursor.fetchall()
+
+            # mantem o array no range de indicadores
+            if contadorIndicador[0] >= 7: contadorIndicador[0] = 6
+
+
+            cursor.execute(f"""
+            SELECT * 
+            FROM metaIndicador 
+            WHERE id_indicadores = {contadorIndicador[0]}
+            """)
+            resultado = cursor.fetchall()
+            print(resultado)
+            self.ids.situacao.text = f'SITUAÇÃO: ( {resultado[0][1]} )'
+            self.ids.magnetude.text = f'MAGNETUDE: ( {resultado[1][1]} )'  
+            self.ids.np.text = f'NP: ( {resultado[2][1]} )'
+
+
+
+            if listaIndicador[contadorIndicador[0]][1] == self.ids.indicador.text and self.ids.indicador.text != 'Erupsões':
+                contadorIndicador[0] -= 1   
+
+                # adiciona o texto novo do indicador e seu número
+                self.ids.indicador.text = listaIndicador[contadorIndicador[0]][1]
+                self.ids.quantidade.text = f"{contadorIndicador[0] + 1}/7"
+
+                subIndece[0] = f'{resultado[0][1]}'
+                subIndece[1] = f'{resultado[1][1]}'
+                subIndece[2] = f'{resultado[2][1]}'
+
+        except:
+            pass
 
 class ContentNavigationDrawer(BoxLayout):
     pass
