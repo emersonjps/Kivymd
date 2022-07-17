@@ -344,9 +344,18 @@ class Tela4(Screen):
             self.maximo -= 8
             self.minimo -= 8 
 
-subIndece = ['', '', '', 10]
+subIndece = ['', '', '', 0]
 contadorIndicador = [0]
 class TelaAvalia(Screen):
+
+    def refresh(self):
+        self.ids.nome_barragem.text = barragem_selecionada[0]
+        
+        cursor.execute(f"SELECT id FROM Barragem WHERE Nome = '{barragem_selecionada[0]}' ")
+        resultado = cursor.fetchall()
+        print(resultado[0][0])
+        subIndece[3] = resultado[0][0]
+
 
 #Funções de ecolha da situação
 #-------------------------------------------------
@@ -455,10 +464,6 @@ class TelaAvalia(Screen):
                 else:                       self.ids.statusNp.text = ''
 
             elif listaIndicador[contadorIndicador[0]][1] == self.ids.indicador.text:
-
-
-
-
                 cursor.execute(f"""
                 SELECT * 
                 FROM metaIndicador 
@@ -510,7 +515,6 @@ class TelaAvalia(Screen):
 
             # mantem o array no range de indicadores
             if contadorIndicador[0] >= 7: contadorIndicador[0] = 6
-
 
             cursor.execute(f"""
             SELECT * 
