@@ -1,3 +1,4 @@
+
 import smtplib
 import email.message
 
@@ -103,7 +104,6 @@ for valor in check_select:
 banco.commit()
 
 indicadores = ['Erupsões', 'Escorregamento', 'Arvores', 'Rip-Rap', 'Buracos', 'Obstrucoes', 'Rachaduras']
-notas = ['0', '0', '0', '0', '0', '0', '0']
 barragem_selecionada = ['(SELECIONAR BARRAGEM)']
 
 class TelaGerenciadora(ScreenManager):
@@ -111,86 +111,6 @@ class TelaGerenciadora(ScreenManager):
 
 class Tela1(Screen):
     pass
-
-class Tela2(Screen):
-    flag_indicador = 0
-
-    def finaliza_avaliacao(self):
-
-        cursor.execute("SELECT * FROM Barragem")
-        resultado = cursor.fetchall()
-        for valor in resultado:
-            if valor[1] == barragem_selecionada[0]:
-                cursor.execute(f"UPDATE Barragem SET status = 1 WHERE id = {valor[0]}")
-                print(f"UPDATE Barragem SET status = 1 WHERE id = {valor[0]}")
-                banco.commit()
-
-                self.cursor = banco.cursor()
-
-    def selecina_barragem(self):
-        self.ids.barragens.text = barragem_selecionada[0]
-
-    def altera_indicador(self, flag):
-        if (flag == 1):
-            #passa para a esquerda
-            if(self.flag_indicador > 0):
-                self.flag_indicador -= 1
-                self.ids.indicador.text = indicadores[self.flag_indicador]
-                if (self.flag_indicador == 0): self.flag_indicador = 0
-
-        elif (flag == 2):
-            # passa para a direira
-            if(self.flag_indicador < 6):
-                self.flag_indicador += 1
-                print(indicadores[self.flag_indicador])
-                self.ids.indicador.text = indicadores[self.flag_indicador]
-                if (self.flag_indicador == 6): self.flag_indicador = 6
-
-    flag_nota = 0
-    def altera_nota(self, flag):
-        if (flag == 1):
-            #passa para a esquerda
-            if(self.flag_nota > 0):
-                self.flag_nota -= 1
-                self.ids.contador.text = str(self.flag_nota)
-                if (self.flag_nota == 0): self.flag_nota = 0
-
-        elif (flag == 2):
-            # passa para a direira
-            if(self.flag_nota < 5):
-                self.flag_nota += 1
-                self.ids.contador.text = str(self.flag_nota)
-                if (self.flag_nota == 5): self.flag_nota = 5
-
-    def guarda_valor(self):
-        try:
-            nota = self.ids.contador.text
-            anotacao = self.ids.anotacao.text
-
-            cursor.execute("SELECT * FROM Barragem")
-            resulatado = cursor.fetchall()
-
-            id_barragem = 0
-
-            print(barragem_selecionada)
-            for valor in resulatado:
-                if valor[1] == barragem_selecionada[0]:
-                    id_barragem = valor[0]
-
-            id_indicador = 0
-            if self.ids.indicador.text == 'Erupsões': id_indicador = 1
-            if self.ids.indicador.text == 'Escorregamento': id_indicador = 2
-            if self.ids.indicador.text == 'Arvores': id_indicador = 3
-            if self.ids.indicador.text == 'Rip-Rap': id_indicador = 4
-            if self.ids.indicador.text == 'Buracos': id_indicador = 5
-            if self.ids.indicador.text == 'Obstrucoes': id_indicador = 6
-            if self.ids.indicador.text == 'Rachaduras': id_indicador = 7
-
-            print(f"INSERT INTO Apresenta VALUES ('{nota}', '{anotacao}', {id_barragem}, {id_indicador}), ")
-            cursor.execute(f"INSERT INTO Apresenta VALUES ('{nota}', '{anotacao}', {id_barragem}, {id_indicador}) ")
-            banco.commit()
-        except:
-            self.ids.barragens.text = 'ERRO: Banco de dados'
 
 # Tela do banco de dados
 class Tela3(Screen):
@@ -289,61 +209,7 @@ class Tela3(Screen):
         barragem_selecionada[0] = self.nome5
 
 
-class Tela4(Screen):
-    maximo = 8
-    minimo = 0
-    cont = 0
-    def exibir_avaliados(self):
-
-        cursor.execute("""
-        SELECT * 
-        FROM Barragem 
-        INNER JOIN Apresenta ON Apresenta.id_Barragem = Barragem.id
-        WHERE status = 1
-        """)
-        resultado = cursor.fetchall()
-
-        print('estou na função')
-        for valor in resultado:
-            print(resultado.index(valor))
-            index = resultado.index(valor)
-
-            print(valor)
-            if index <= self.maximo and index >= self.minimo:
-
-                if self.cont == 0:
-                    self.ids.lb1.text = f'Nome: {valor[1]}'
-                    self.ids.lb9.text = f'Anotação: {valor[5]}'
-                    self.ids.lb2.text = f'Erupsões: {valor[4]}' 
-                if self.cont == 1: 
-                    self.ids.lb3.text = f'Escorregamento: {valor[4]}'
-                if self.cont == 2:
-                    self.ids.lb4.text = f'Arvores: {valor[4]}'
-                if self.cont == 3: 
-                    self.ids.lb5.text = f'Rip-Rap: {valor[4]}'
-                if self.cont == 4:
-                    self.ids.lb6.text = f'Buracos: {valor[4]}'
-                if self.cont == 5: 
-                    self.ids.lb7.text = f'Obstrucoes: {valor[4]}'
-                if self.cont == 6:
-                    self.ids.lb8.text = f'Rachaduras: {valor[4]}'                   
-
-                self.cont += 1
-                if self.cont == 7: self.cont = 0
-
-
-    def nova_pagina(self):
-        print('segunfo')
-        self.maximo += 8
-        self.minimo += 8 
-        self.cont = 0
-
-    def antiga_pagina(self):
-        self.cont = 0
-        if self.maximo > 5:
-            self.maximo -= 8
-            self.minimo -= 8 
-
+#             1,  2,  3, 4 ----------> 1-situação | 2-magnetude | 3-número de perigo NP
 subIndece = ['', '', '', 0]
 contadorIndicador = [0]
 class TelaAvalia(Screen):
@@ -351,53 +217,81 @@ class TelaAvalia(Screen):
     def refresh(self):
         self.ids.nome_barragem.text = barragem_selecionada[0]
         
-        cursor.execute(f"SELECT id FROM Barragem WHERE Nome = '{barragem_selecionada[0]}' ")
-        resultado = cursor.fetchall()
-        print(resultado[0][0])
-        subIndece[3] = resultado[0][0]
+        try:    
+            cursor.execute(f"SELECT id FROM Barragem WHERE Nome = '{barragem_selecionada[0]}' ")
+            resultado = cursor.fetchall()
+            print(resultado[0][0])
+            subIndece[3] = resultado[0][0]
+        except:
+            pass
 
-
-#Funções de ecolha da situação
-#-------------------------------------------------
+    #Funções de ecolha da situação
+    #-------------------------------------------------
     def NA(self):
         self.ids.situacao.text = "SITUAÇÃO: ( NA )"
         subIndece[0] = 'NA'
         print(subIndece[0])
+
+        subIndece[1] = 'NULL'
+        subIndece[2] = 'NULL'
+        self.ids.statusSituacao.text = 'NÃO SE APLICA!'
+        self.ids.statusMagnetude.text = 'NULL'
+        self.ids.statusNp.text = 'NULL'
+
+                
+    def NI(self):
+        self.ids.situacao.text = "SITUAÇÃO: ( NI )"
+        subIndece[0] = 'NI'
+        print(subIndece[0])
+
+        subIndece[1] = 'NULL'
+        subIndece[2] = 'NULL'
+        self.ids.statusSituacao.text = 'NÃO É INSPECIONADO!'
+        self.ids.statusMagnetude.text = 'NULL'
+        self.ids.statusNp.text = 'NULL'
+
 
     def NE(self):
         self.ids.situacao.text = "SITUAÇÃO: ( NE )"
         subIndece[0] = 'NE'
         print(subIndece[0])
 
+        subIndece[1] = 'NULL'
+        subIndece[2] = 'NULL'
+        self.ids.statusSituacao.text = 'NÃO EXISTE!'
+        self.ids.statusMagnetude.text = 'NULL'
+        self.ids.statusNp.text = 'NULL'
+
+
     def PV(self):
         self.ids.situacao.text = "SITUAÇÃO: ( PV )"
         subIndece[0] = 'PV'
         print(subIndece[0])
+        self.ids.statusSituacao.text = ''
 
     def DS(self):
         self.ids.situacao.text = "SITUAÇÃO: ( DS )"
         subIndece[0] = 'DS'
         print(subIndece[0])   
+        self.ids.statusSituacao.text = ''
 
     def DI(self):
         self.ids.situacao.text = "SITUAÇÃO: ( DI )"
         subIndece[0] = 'DI'
         print(subIndece[0])
+        self.ids.statusSituacao.text = ''
 
     def PC(self):
         self.ids.situacao.text = "SITUAÇÃO: ( PC )"
         subIndece[0] = 'PC'
         print(subIndece[0])
+        self.ids.statusSituacao.text = ''
                 
     def AU(self):
         self.ids.situacao.text = "SITUAÇÃO: ( AU )"
         subIndece[0] = 'AU'
         print(subIndece[0])
-                
-    def NI(self):
-        self.ids.situacao.text = "SITUAÇÃO: ( NI )"
-        subIndece[0] = 'NI'
-        print(subIndece[0])
+        self.ids.statusSituacao.text = ''
 #---------------------------------------------------              
 #---------------------------------------------------              
 
@@ -408,21 +302,26 @@ class TelaAvalia(Screen):
         self.ids.magnetude.text = "MAGNETUDE: ( I )"
         subIndece[1] = 'I'
         print(subIndece[1])
+        self.ids.statusMagnetude.text = ''
 
     def P(self):
         self.ids.magnetude.text = "MAGNETUDE: ( P )"
         subIndece[1] = 'P'
         print(subIndece[1])
+        self.ids.statusMagnetude.text = ''
                 
     def T(self):
         self.ids.magnetude.text = "MAGNETUDE: ( T )"
         subIndece[1] = 'T'
         print(subIndece[1])
+        self.ids.statusMagnetude.text = ''
                 
     def G(self):
         self.ids.magnetude.text = "MAGNETUDE: ( G )"
         subIndece[1] = 'G'
         print(subIndece[1])
+        self.ids.statusMagnetude.text = ''
+
 #---------------------------------------------------              
 #---------------------------------------------------              
 
@@ -432,21 +331,26 @@ class TelaAvalia(Screen):
         self.ids.np.text = "NP: ( 0 )"
         subIndece[2] = '0'
         print(subIndece[2])
+        self.ids.statusNp.text = ''
 
     def _1(self):
         self.ids.np.text = "NP: ( 1 )"
         subIndece[2] = '1'
         print(subIndece[2])
+        self.ids.statusNp.text = ''
                 
     def _2(self):
         self.ids.np.text = "NP: ( 2 )"
         subIndece[2] = '2'
         print(subIndece[2])
+        self.ids.statusNp.text = ''
                 
     def _3(self):
         self.ids.np.text = "NP: ( 3 )"
         subIndece[2] = 'G'
         print(subIndece[2])
+        self.ids.statusNp.text = ''
+
 #---------------------------------------------------              
 #---------------------------------------------------   
 
